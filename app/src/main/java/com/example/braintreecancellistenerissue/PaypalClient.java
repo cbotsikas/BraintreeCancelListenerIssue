@@ -37,6 +37,12 @@ public class PaypalClient implements
     public void close() {
         if (mBraintreeFragment != null) {
             mBraintreeFragment.removeListener(this);
+            // If we don't remove the fragment from the manager, no future listeners are executed
+            mBraintreeFragment
+                    .getParentFragmentManager()
+                    .beginTransaction()
+                    .remove(mBraintreeFragment)
+                    .commit();
         }
     }
 
